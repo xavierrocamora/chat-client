@@ -7,12 +7,12 @@ import './InfoBar.css';
 const InfoBar = ({ room }) => (
     <div className="infoBar">
         <div className="leftInnerContainer">
-            <img className="onLineIcon" src={onLineIcon} alt="online image" />
+            <img className="onLineIcon" src={onLineIcon} alt="online" />
             <h3>{room}</h3>
         </div>
         <div className="rightInnerContainer">
             <a href="/">
-                <img src= {closeIcon} alt="close image" />
+                <img src= {closeIcon} alt="close" />
             </a>
         </div>
     </div>
