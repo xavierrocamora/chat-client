@@ -6,6 +6,7 @@ import io from 'socket.io-client';
 import InfoBar from '../InfoBar/InfoBar';
 import Input from '../Input/Input';
 import Messages from '../Messages/Messages';
+import RoomUsersContainer from '../RoomUsersContainer/RoomUsersContainer';
 import './Chat.css';
 
 let socket;
@@ -15,6 +16,7 @@ const Chat = ({ location }) => {
     const [room, setRoom] = useState('');
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
+    const [users, setUsers] = useState('');
     const ENDPOINT = 'localhost:5000';
 
     // handling how to send join requests
@@ -58,6 +60,12 @@ const Chat = ({ location }) => {
             setMessages([...messages, message]);
         });
 
+        // we hear for roomData event from server
+        socket.on('roomData', ({users}) => {
+            // we add the received array to our array of users state
+            setUsers(users);
+        });
+
         // we run this useEffect only when the array of messages state changes
 
     }, [messages]);
@@ -72,7 +80,7 @@ const Chat = ({ location }) => {
         }
     }
 
-    console.log(message, messages);
+    console.log(message, messages, users);
 
     return (
         <div className="outerContainer">
@@ -81,6 +89,7 @@ const Chat = ({ location }) => {
                 <Messages messages={messages} name={name}/>
                 <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
             </div>
+            <RoomUsersContainer users={users} />    
         </div>
     )
 }
